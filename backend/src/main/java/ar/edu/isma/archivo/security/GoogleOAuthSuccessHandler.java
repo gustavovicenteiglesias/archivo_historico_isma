@@ -18,15 +18,18 @@ public class GoogleOAuthSuccessHandler implements AuthenticationSuccessHandler {
     private final UsuarioService usuarioService;
     private final TokenService tokenService;
     private final String frontendUrl;
+    private final CookieOAuth2AuthorizationRequestRepository authorizationRequestRepository;
 
     public GoogleOAuthSuccessHandler(
             UsuarioService usuarioService,
             TokenService tokenService,
-            @Value("${app.frontend-url}") String frontendUrl
+            @Value("${app.frontend-url}") String frontendUrl,
+            CookieOAuth2AuthorizationRequestRepository authorizationRequestRepository
     ) {
         this.usuarioService = usuarioService;
         this.tokenService = tokenService;
         this.frontendUrl = frontendUrl;
+        this.authorizationRequestRepository = authorizationRequestRepository;
     }
 
     @Override
@@ -34,13 +37,14 @@ public class GoogleOAuthSuccessHandler implements AuthenticationSuccessHandler {
             throws IOException, ServletException {
         OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
         try {
+            authorizationRequestRepository.removeAuthorizationRequestCookies(response);
             Usuario usuario = usuarioService.registrarAccesoGoogle(
                     oauthUser.getAttribute("name"),
                     oauthUser.getAttribute("email"),
                     oauthUser.getAttribute("sub")
             );
             String token = tokenService.createToken(usuario.getId(), usuario.getRol());
-            response.sendRedirect(frontendUrl + "/auth/callback?token=" + token);
+            response.sendRedirect(frontendUrl + "/oauth-callback?token=" + token);
         } catch (BlockedUserException ex) {
             response.sendRedirect(frontendUrl + "/usuario-bloqueado");
         }

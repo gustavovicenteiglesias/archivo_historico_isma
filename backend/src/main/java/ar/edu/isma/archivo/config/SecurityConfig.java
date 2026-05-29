@@ -1,6 +1,7 @@
 package ar.edu.isma.archivo.config;
 
 import ar.edu.isma.archivo.security.BearerTokenFilter;
+import ar.edu.isma.archivo.security.CookieOAuth2AuthorizationRequestRepository;
 import ar.edu.isma.archivo.security.GoogleOAuthSuccessHandler;
 import ar.edu.isma.archivo.security.OAuthFailureHandler;
 import java.util.Arrays;
@@ -26,7 +27,8 @@ public class SecurityConfig {
             HttpSecurity http,
             BearerTokenFilter bearerTokenFilter,
             GoogleOAuthSuccessHandler googleOAuthSuccessHandler,
-            OAuthFailureHandler oAuthFailureHandler
+            OAuthFailureHandler oAuthFailureHandler,
+            CookieOAuth2AuthorizationRequestRepository authorizationRequestRepository
     ) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
@@ -40,6 +42,9 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
+                        .authorizationEndpoint(endpoint -> endpoint
+                                .authorizationRequestRepository(authorizationRequestRepository)
+                        )
                         .successHandler(googleOAuthSuccessHandler)
                         .failureHandler(oAuthFailureHandler)
                 )

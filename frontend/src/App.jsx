@@ -28,7 +28,7 @@ export default function App() {
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/terminos" element={<Terminos />} />
           <Route path="/usuario-bloqueado" element={<UsuarioBloqueado />} />
-          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/oauth-callback" element={<AuthCallback />} />
           <Route path="/aportar" element={<ProtectedRoute><AportarFoto /></ProtectedRoute>} />
           <Route path="/mis-aportes" element={<ProtectedRoute><MisAportes /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute adminOnly><AdminPanel /></ProtectedRoute>} />
