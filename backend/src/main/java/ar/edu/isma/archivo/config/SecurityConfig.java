@@ -2,6 +2,7 @@ package ar.edu.isma.archivo.config;
 
 import ar.edu.isma.archivo.security.BearerTokenFilter;
 import ar.edu.isma.archivo.security.GoogleOAuthSuccessHandler;
+import ar.edu.isma.archivo.security.OAuthFailureHandler;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             BearerTokenFilter bearerTokenFilter,
-            GoogleOAuthSuccessHandler googleOAuthSuccessHandler
+            GoogleOAuthSuccessHandler googleOAuthSuccessHandler,
+            OAuthFailureHandler oAuthFailureHandler
     ) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
@@ -37,7 +39,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/colaborador/**").hasAnyRole("COLABORADOR", "ADMIN")
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth -> oauth.successHandler(googleOAuthSuccessHandler))
+                .oauth2Login(oauth -> oauth
+                        .successHandler(googleOAuthSuccessHandler)
+                        .failureHandler(oAuthFailureHandler)
+                )
                 .addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
