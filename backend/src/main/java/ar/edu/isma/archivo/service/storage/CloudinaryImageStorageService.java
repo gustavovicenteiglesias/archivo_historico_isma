@@ -7,13 +7,13 @@ import com.cloudinary.Transformation;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@ConditionalOnBean(Cloudinary.class)
+@ConditionalOnExpression("!'${app.cloudinary.cloud-name:}'.isBlank() && !'${app.cloudinary.api-key:}'.isBlank() && !'${app.cloudinary.api-secret:}'.isBlank()")
 public class CloudinaryImageStorageService implements ImageStorageService {
     private final Cloudinary cloudinary;
     private final String folder;

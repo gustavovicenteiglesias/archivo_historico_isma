@@ -1,12 +1,12 @@
 package ar.edu.isma.archivo.service.storage;
 
 import ar.edu.isma.archivo.exception.BadRequestException;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@ConditionalOnMissingBean(ImageStorageService.class)
+@ConditionalOnExpression("'${app.cloudinary.cloud-name:}'.isBlank() || '${app.cloudinary.api-key:}'.isBlank() || '${app.cloudinary.api-secret:}'.isBlank()")
 public class MissingImageStorageService implements ImageStorageService {
     @Override
     public StoredImage upload(MultipartFile file) {

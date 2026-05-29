@@ -65,3 +65,4 @@ La app queda disponible en `http://localhost:5173`.
 - `docs/software.md`: documentación técnica del sistema.
 - `docs/manual-usuarios.md`: manual simple para compartir con la comunidad.
 - `docs/manual-administradores.md`: guía simple para quienes revisen publicaciones.
+- `docs/despliegue-backend.md`: arranque del JAR, `.env` y ejemplo de systemd.

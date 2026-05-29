@@ -213,6 +213,20 @@ URL local backend:
 http://localhost:8090
 ```
 
+## Ejecucion del JAR
+
+Al ejecutar el backend empaquetado como JAR, el archivo `.env` debe estar disponible para el proceso.
+
+Opciones validas:
+
+- arrancar el JAR desde la raiz del proyecto o desde `backend/`;
+- usar `EnvironmentFile` en systemd;
+- indicar una ruta absoluta con `APP_ENV_FILE=/ruta/al/app_isma_fotos/.env`.
+
+Si el log muestra `Access denied for user 'root'@'localhost' (using password: NO)`, el backend no leyo `DB_PASSWORD` y esta usando el valor por defecto vacio.
+
+Ver tambien: `docs/despliegue-backend.md`.
+
 ## Consideraciones
 
 - No se guardan imágenes como BLOB en MySQL.
