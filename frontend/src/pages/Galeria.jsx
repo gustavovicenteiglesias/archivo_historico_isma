@@ -1,4 +1,4 @@
-import { Alert, Box, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Box, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import FotoCard from '../components/FotoCard';
 import { getCategorias, getFotosPublicas } from '../api/fotosApi';
@@ -23,22 +23,22 @@ export default function Galeria() {
         })
         .catch((err) => {
           setFotos([]);
-          setError(err.response?.data?.messages?.[0] || 'No se pudo cargar la galería.');
+          setError(err.response?.data?.messages?.[0] || 'No se pudo cargar la galer\u00eda.');
         });
     }, 250);
     return () => clearTimeout(timer);
   }, [q, categoriaId]);
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} sx={{ width: '100%', minWidth: 0, overflowX: 'hidden' }}>
       <Box>
-        <Typography variant="h1">Galería pública</Typography>
-        <Typography color="text.secondary">Solo se muestran fotos aprobadas por administración.</Typography>
+        <Typography variant="h1">{'Galer\u00eda p\u00fablica'}</Typography>
+        <Typography color="text.secondary">{'Solo se muestran fotos aprobadas por administraci\u00f3n.'}</Typography>
       </Box>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
         <TextField label="Buscar" value={q} onChange={(e) => setQ(e.target.value)} fullWidth />
         <TextField
-          label="Categoría"
+          label="Categor\u00eda"
           value={categoriaId}
           onChange={(e) => setCategoriaId(e.target.value)}
           select
@@ -51,15 +51,27 @@ export default function Galeria() {
         </TextField>
       </Stack>
       {error && <Alert severity="error">{error}</Alert>}
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: 'minmax(0, 1fr)',
+            sm: 'repeat(2, minmax(0, 1fr))',
+            md: 'repeat(3, minmax(0, 1fr))',
+          },
+          gap: 2,
+          width: '100%',
+          minWidth: 0,
+        }}
+      >
         {fotos.map((foto) => (
-          <Grid item xs={12} sm={6} md={4} key={foto.id}>
+          <Box key={foto.id} sx={{ minWidth: 0 }}>
             <FotoCard foto={foto} />
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
       {!fotos.length && !error && (
-        <Alert severity="info">Todavía no hay fotos aprobadas para mostrar.</Alert>
+        <Alert severity="info">{'Todav\u00eda no hay fotos aprobadas para mostrar.'}</Alert>
       )}
     </Stack>
   );

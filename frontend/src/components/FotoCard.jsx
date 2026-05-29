@@ -7,7 +7,7 @@ export default function FotoCard({ foto }) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', width: '100%', minWidth: 0 }}>
       <CardActionArea onClick={() => navigate(`/galeria/${foto.id}`)} sx={{ height: '100%' }}>
         <CardMedia
           component="img"
@@ -15,8 +15,8 @@ export default function FotoCard({ foto }) {
           alt={foto.titulo}
           sx={{ aspectRatio: '4 / 3', objectFit: 'cover' }}
         />
-        <CardContent>
-          <Typography variant="h3" sx={{ mb: 1, fontSize: '1.05rem' }}>
+        <CardContent sx={{ minWidth: 0 }}>
+          <Typography variant="h3" sx={{ mb: 1, fontSize: '1.05rem', overflowWrap: 'anywhere' }}>
             {foto.titulo}
           </Typography>
           <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">

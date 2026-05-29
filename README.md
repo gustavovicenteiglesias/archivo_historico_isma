@@ -31,8 +31,8 @@ source db/seed.sql;
 
 Configurar en Google Cloud Console:
 
-- Authorized JavaScript origins: `http://localhost:5173` y `http://localhost:8080`
-- Authorized redirect URI: `http://localhost:8080/login/oauth2/code/google`
+- Authorized JavaScript origins: `http://localhost:5173` y `http://localhost:8090`
+- Authorized redirect URI: `http://localhost:8090/login/oauth2/code/google`
 
 ## Ejecucion local
 
