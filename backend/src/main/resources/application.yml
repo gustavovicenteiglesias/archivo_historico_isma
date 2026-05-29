@@ -35,6 +35,7 @@ spring:
 
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  frontend-urls: ${FRONTEND_URLS:${FRONTEND_URL:http://localhost:5173}}
   admin:
     email: ${ADMIN_EMAIL:admin@isma.local}
     password: ${ADMIN_PASSWORD:admin123}

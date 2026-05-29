@@ -38,7 +38,7 @@ export default function Galeria() {
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
         <TextField label="Buscar" value={q} onChange={(e) => setQ(e.target.value)} fullWidth />
         <TextField
-          label="Categor\u00eda"
+          label={'Categor\u00eda'}
           value={categoriaId}
           onChange={(e) => setCategoriaId(e.target.value)}
           select

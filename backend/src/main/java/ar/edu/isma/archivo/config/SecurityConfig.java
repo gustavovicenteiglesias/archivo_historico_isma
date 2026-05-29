@@ -2,6 +2,7 @@ package ar.edu.isma.archivo.config;
 
 import ar.edu.isma.archivo.security.BearerTokenFilter;
 import ar.edu.isma.archivo.security.GoogleOAuthSuccessHandler;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -43,9 +44,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(@Value("${app.frontend-url}") String frontendUrl) {
+    CorsConfigurationSource corsConfigurationSource(@Value("${app.frontend-urls}") String frontendUrls) {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(frontendUrl));
+        List<String> allowedOrigins = Arrays.stream(frontendUrls.split(","))
+                .map(String::trim)
+                .filter(origin -> !origin.isBlank())
+                .toList();
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
